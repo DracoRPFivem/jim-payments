@@ -8,7 +8,7 @@ Config = {}
 
 Config.Debug = false
 
-Config.Manage = false -- "true" if using qb-management
+Config.Manage = true -- "true" if using qb-management
 					 -- "false" if using qb-bossmenu
 					
 Config.TicketSystem = true -- Enable this if you want to use the ticket system false
