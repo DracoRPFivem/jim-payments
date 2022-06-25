@@ -17,6 +17,7 @@ end)
 QBCore.Commands.Add("cashregister", "Use mobile cash register", {}, false, function(source) TriggerClientEvent("jim-payments:client:Charge", source, {}, true) end)
 
 RegisterServerEvent('jim-payments:Tickets:Give', function(data, biller, gang)
+    local billed = QBCore.Functions.GetPlayer(source) -- This should always be from the person who accepted the payment
 	if biller then -- If this is found, it ISN'T a phone payment, so add money to society here
 		if gang then
 			if Config.Manage then exports["qb-management"]:AddGangMoney(tostring(biller.PlayerData.gang.name), data.amount) 
@@ -32,7 +33,10 @@ RegisterServerEvent('jim-payments:Tickets:Give', function(data, biller, gang)
 			end
 		end
 	elseif not biller then	--Find the biller from their citizenid
-		local biller = QBCore.Functions.GetPlayerByCitizenId(data.senderCitizenId)
+		for k, v in pairs(QBCore.Functions.GetPlayers()) do
+		local Player = QBCore.Functions.GetPlayer(v)
+			if Player.PlayerData.citizenid == data.senderCitizenId then	biller = Player	end
+		end
 		TriggerClientEvent('QBCore:Notify', biller.PlayerData.source, data.sender.." Paid their $"..data.amount.." invoice", "success")
 	end
 
@@ -44,7 +48,7 @@ RegisterServerEvent('jim-payments:Tickets:Give', function(data, biller, gang)
 		if data.amount >= Config.Jobs[data.society].MinAmountforTicket then
 			for k, v in pairs(QBCore.Functions.GetPlayers()) do
 				local Player = QBCore.Functions.GetPlayer(v)
-				if Player ~= nil then
+				if Player ~= nil or Player ~= billed then
 					if Player.PlayerData.job.name == data.society and Player.PlayerData.job.onduty then
 						Player.Functions.AddItem('payticket', 1, false, {["quality"] = nil})
 						TriggerClientEvent('QBCore:Notify', Player.PlayerData.source, 'Receipt received', 'success')
