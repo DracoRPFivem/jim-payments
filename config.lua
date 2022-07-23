@@ -50,8 +50,8 @@ Config = {
 	Commission = true, -- Set this to true to enable Commissions and give the person charging a percentage of the total
 	CommissionAll = false, -- Set this to true to give commission to workers clocked in
 	CommissionDouble = false, -- Set this to true if you want the person charging to get double Commission
-	CommissionLimit = false, -- If true, this limits the Commission to only be given if over the "MinAmountForTicket".
-							 -- If false, Commission will be given for any amount
+	CommissionLimit = false,	-- If true, this limits the Commission to only be given if over the "MinAmountForTicket".
+								-- If false, Commission will be given for any amount
 
 	Gabz = false, -- "true" to enable Gabz Bank locations
 
@@ -68,7 +68,13 @@ Config = {
 		['tequilala'] = { MinAmountforTicket = 50, PayPerTicket = 50, Commission = 0.10, },
 		['vanilla'] = { MinAmountforTicket = 50, PayPerTicket = 50, Commission = 0.10, },
 		['mechanic'] = { MinAmountforTicket = 1000, PayPerTicket = 500, Commission = 0.10, },
-		['lostmc'] = { MinAmountforTicket = 50, PayPerTicket = 50, Commission = 0.10, gang = true, },
+		['lostmc'] = { MinAmountforTicket = 50, PayPerTicket = 50, Commission = 0.10, gang = true, }, -- Example of a gang being supported
+	},
+
+	-- This adds the ability to add multiple locations for each job
+	-- Basically adding ready made locations, all you need to a vector4 and to confrim if you need a new prop in that location
+    CustomCashRegisters = {
+
 	},
 
 	-- The /polcharge command requires specific jobs to be set
