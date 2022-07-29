@@ -40,6 +40,7 @@ CreateThread(function()
 	if Config.Peds then
 		local i = math.random(1, #Config.PedPool)
 		loadModel(Config.PedPool[i])
+		if not Config.Gabz then CreateModelHide(vector3(Config.CashInLocation.x, Config.CashInLocation.y, Config.CashInLocation.z), 1.0, `v_corp_bk_chair3`, true) end
 		if not BankPed then BankPed = CreatePed(0, Config.PedPool[i], vector3(Config.CashInLocation.x, Config.CashInLocation.y, Config.CashInLocation.z-1), Config.CashInLocation[4], false, false) end
 		if Config.Debug then print("^5Debug^7: ^6Ped ^2Created for location^7: '^6Ticket Trade^7'") end
 	end
@@ -83,7 +84,7 @@ RegisterNetEvent('jim-payments:client:Charge', function(data, outside)
 			end
 		end
 		--If list is empty(no one nearby) show error and stop
-		if not nearbyList[#nearbyList] then TriggerEvent("QBCore:Notify", "No one near by to charge", "error") return end
+		if not nearbyList[1] then TriggerEvent("QBCore:Notify", "No one near by to charge", "error") return end
 		newinputs[#newinputs+1] = { text = " ", name = "citizen", type = "select", options = nearbyList }
 	else -- If Config.List is false, create input text box for ID's
 		newinputs[#newinputs+1] = { type = 'text', isRequired = true, name = 'citizen', text = '# Customer ID #' }
@@ -128,7 +129,7 @@ RegisterNetEvent('jim-payments:client:PolCharge', function()
 			end
 		end
 		--If list is empty(no one nearby) show error and stop
-		if not nearbyList[#nearbyList] then TriggerEvent("QBCore:Notify", "No one near by to charge", "error") return end
+		if not nearbyList[1] then TriggerEvent("QBCore:Notify", "No one near by to charge", "error") return end
 		newinputs[#newinputs+1] = { text = " ", name = "citizen", type = "select", options = nearbyList }
 	else -- If Config.List is false, create input text box for ID's
 		newinputs[#newinputs+1] = { type = 'text', isRequired = true, name = 'citizen', text = "# Person's ID #" }
